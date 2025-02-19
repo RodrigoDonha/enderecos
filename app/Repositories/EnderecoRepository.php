@@ -12,7 +12,7 @@ class EnderecoRepository
         echo "buscando registros...\n";
         echo "\n";
 
-        ini_set('memory_limit', '4096M');
+        ini_set('memory_limit', '1024M');
         return DB::table('enderecos')
         ->join('cidades', 'enderecos.cod_municipio', '=', 'cidades.cd_mun')
         ->join('estados', 'enderecos.cod_uf', '=', 'estados.cod_uf')
