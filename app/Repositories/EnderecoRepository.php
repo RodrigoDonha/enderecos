@@ -32,29 +32,39 @@ class EnderecoRepository
         $total = count($enderecos);
         $count = 0;
         foreach ($enderecos as $key => $value) {
-            $end_completo['end_completo'] = str_replace(', ,', '', strtoupper(
+            $end_completo['end_completo'] =
                 $value->nom_tipo_seglogr . " " .
                 $value->nom_titulo_seglogr . " " .
                 $value->nom_seglogr. ", " .
-                $value->num_endereco . ", " .
-                $value->nom_comp_elem1 . " " .
-                $value->val_comp_elem1 . ", " .
-                $value->nom_comp_elem2 . " " .
-                $value->val_comp_elem2 . ", " .
-                $value->nom_comp_elem3 . " " .
-                $value->val_comp_elem3 . ", " .
-                $value->nom_comp_elem4 . " " .
-                $value->val_comp_elem4 . ", " .
-                $value->nom_comp_elem5 . " " .
-                $value->val_comp_elem5 . ", " .
-                $value->dsc_estabelecimento . ", " .
-                $value->dsc_localidade. ", " .
+                $value->num_endereco . ", "
+            ;
+
+            !empty($value->nom_comp_elem1) ? $end_completo['end_completo'] = $end_completo['end_completo'] . $value->nom_comp_elem1 . " ": '';
+            !empty($value->val_comp_elem1) ? $end_completo['end_completo'] = $end_completo['end_completo'] . $value->val_comp_elem1 . ", ": '';
+            !empty($value->nom_comp_elem2) ? $end_completo['end_completo'] = $end_completo['end_completo'] . $value->nom_comp_elem2 . " ": '';
+            !empty($value->val_comp_elem2) ? $end_completo['end_completo'] = $end_completo['end_completo'] . $value->val_comp_elem2 . ", ": '';
+            !empty($value->nom_comp_elem3) ? $end_completo['end_completo'] = $end_completo['end_completo'] . $value->nom_comp_elem3 . " ": '';
+            !empty($value->val_comp_elem3) ? $end_completo['end_completo'] = $end_completo['end_completo'] . $value->val_comp_elem3 . ", ": '';
+            !empty($value->nom_comp_elem4) ? $end_completo['end_completo'] = $end_completo['end_completo'] . $value->nom_comp_elem4 . " ": '';
+            !empty($value->val_comp_elem4) ? $end_completo['end_completo'] = $end_completo['end_completo'] . $value->val_comp_elem4 . ", ": '';
+            !empty($value->nom_comp_elem5) ? $end_completo['end_completo'] = $end_completo['end_completo'] . $value->nom_comp_elem5 . " ": '';
+            !empty($value->val_comp_elem5) ? $end_completo['end_completo'] = $end_completo['end_completo'] . $value->val_comp_elem5 . ", ": '';
+            !empty($value->dsc_estabelecimento) ? $end_completo['end_completo'] = $end_completo['end_completo'] . $value->dsc_estabelecimento . ", ": '';
+            !empty($value->dsc_localidade) ? $end_completo['end_completo'] = $end_completo['end_completo'] . $value->dsc_localidade . ", ": '';
+
+            $end_completo['end_completo'] = $end_completo['end_completo'] .
                 $value->cidade. "/" .
                 $value->uf. " " .
                 $value->cep
-            ));
+            ;
 
             $end_completo['end_completo'] = str_replace('  ', ' ', $end_completo['end_completo']);
+            $end_completo['end_completo'] = str_replace(', , , , ,', '', $end_completo['end_completo']);
+            $end_completo['end_completo'] = str_replace(', , , ,', '', $end_completo['end_completo']);
+            $end_completo['end_completo'] = str_replace(', , ,', '', $end_completo['end_completo']);
+            $end_completo['end_completo'] = str_replace(', ,', '', $end_completo['end_completo']);
+
+            $end_completo['end_completo'] = strtoupper($end_completo['end_completo']);
 
             Endereco::where('endereco_id', $value->endereco_id)->update($end_completo);
             $count++;
